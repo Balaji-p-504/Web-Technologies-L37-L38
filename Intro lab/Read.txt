@@ -1,1 +1,4 @@
-for intro lab
+2 html pages and 1 javascript
+
+it is a university login with registration link at top right that takes it to a registraion page and asks for 4 details.
+if any detail is null then the javascript will show error.
