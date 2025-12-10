@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vitap University - Home</title>
+    <style>
+        :root{--maroon:#800000;--maroon-dark:#5a0000;--white:#fff;}
+        body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#222;background:#fff;}
+        .header{background:var(--maroon);color:var(--white);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;}
+        .brand{display:flex;align-items:center;gap:12px;}
+        .logo{width:56px;height:56px;border-radius:8px;background:var(--white);display:flex;align-items:center;justify-content:center;color:var(--maroon);font-weight:700;font-size:18px;}
+        .nav a{color:var(--white);text-decoration:none;padding:8px 12px;border-radius:4px;background:transparent;}
+        .nav a.registration{background:var(--white);color:var(--maroon);font-weight:600;}
+        .hero{display:flex;flex-wrap:wrap;align-items:center;gap:24px;padding:32px;}
+        .hero img{flex:1;min-width:300px;max-width:680px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.15);}
+        .hero .intro{flex:1;min-width:280px;color:#111;}
+        .section{padding:28px 24px;border-top:1px solid #f3f3f3;}
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:18px;}
+        .card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.06);}
+        .card img{width:100%;height:160px;object-fit:cover;}
+        .card .content{padding:12px 14px;}
+        .footer{background:var(--maroon-dark);color:var(--white);padding:18px 24px;text-align:center;margin-top:24px;}
+        a.button{display:inline-block;background:var(--maroon);color:var(--white);padding:10px 14px;border-radius:6px;text-decoration:none;font-weight:600;}
+        @media(max-width:640px){.hero{padding:18px}.hero img{order:-1;width:100%}}
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="brand">
+        <div class="logo" aria-hidden="false" title="Vitap University logo">
+            <img src="images/vitap_logo.png" alt="Vitap logo" style="width:56px;height:56px;border-radius:8px;object-fit:cover;">
+        </div>
+        <div>
+            <h1 style="margin:0;font-size:20px">Vitap University</h1>
+            <div style="font-size:13px;opacity:0.9">Excellence in Education</div>
+        </div>
+    </div>
+    <nav class="nav">
+        <a href="registration.html" class="registration">Registration</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <img src="images/lecture.jpg" alt="University building">
+        <div class="intro">
+            <h2>Welcome to Vitap University</h2>
+            <p>Vitap University is committed to academic excellence, research innovation, and student success. We offer a broad range of undergraduate and postgraduate programs, vibrant campus life, and global partnerships.</p>
+            <p><a href="#programs" class="button">Explore Programs</a></p>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <h2>About Vitap</h2>
+        <p>Founded to foster a diverse community of scholars, Vitap University focuses on practical, career-ready education while encouraging critical thinking and research. Our faculties include Engineering, Business, Arts, Sciences, and Health.</p>
+    </section>
+
+    <section class="section" id="programs">
+        <h2>Programs</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="images/eng.jpg" alt="Engineering labs">
+                <div class="content">
+                    <h3>Engineering</h3>
+                    <p>Undergraduate and graduate programs in Civil, Electrical, Mechanical and Computer Engineering.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="images/lecture.jpg" alt="Business students">
+                <div class="content">
+                    <h3>Business & Management</h3>
+                    <p>Programs in Accounting, Finance, Marketing, and Entrepreneurship with industry internships.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="images/library.jpg" alt="Library">
+                <div class="content">
+                    <h3>Arts & Sciences</h3>
+                    <p>Strong liberal arts core, research-focused science degrees, and interdisciplinary opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="campus">
+        <h2>Campus Life</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="images/graduation.jpg" alt="Students on campus">
+                <div class="content"><h3>Vibrant Community</h3><p>Clubs, cultural events, sports, and volunteering opportunities.</p></div>
+            </div>
+            <div class="card">
+                <img src="images/dorm.jpg" alt="Dormitories">
+                <div class="content"><h3>Housing & Facilities</h3><p>Comfortable housing, dining services, and modern study spaces.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="admissions">
+        <h2>Admissions</h2>
+        <p>We welcome applications from across the globe. Learn about entry requirements, scholarships, and application deadlines. Ready to apply? <a href="registration.html" class="button">Register Now</a></p>
+    </section>
+
+    <section class="section" id="contact">
+        <h2>Contact</h2>
+        <p>Email: admissions@vitap.edu | Phone: +1 (555) 123-4567</p>
+    </section>
+
+    <section class="section" id="gallery">
+        <h2>Gallery</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="images/lecture.jpg" alt="Lecture hall">
+                <div class="content"><h3>Lecture Halls</h3><p>Modern lecture halls and smart classrooms.</p></div>
+            </div>
+            <div class="card">
+                <img src="images/graduation.jpg" alt="Graduation">
+                <div class="content"><h3>Graduation</h3><p>Celebrating student achievements.</p></div>
+            </div>
+            <div class="card">
+                <img src="images/research.jpg" alt="Research lab">
+                <div class="content"><h3>Research Labs</h3><p>State-of-the-art research facilities.</p></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 Vitap University — All rights reserved.</p>
+</footer>
+</body>
+</html>
