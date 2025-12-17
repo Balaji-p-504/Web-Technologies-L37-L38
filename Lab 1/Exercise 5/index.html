@@ -3,54 +3,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Portfolio — Cybersecurity Analyst</title>
-    <style>
-        :root{
-            --primary-cyan: #00d1ff; /* primary */
-            --secondary-teal: #008b96; /* secondary */
-            --bg:#f2fdff;
-            --card:#ffffff;
-            --muted:#345f63;
-        }
-        *{box-sizing:border-box}
-        body{font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin:0; background:linear-gradient(180deg,var(--bg),#e6fbff); color:#042b2d}
-
-        header{background:linear-gradient(90deg,var(--primary-cyan),var(--secondary-teal)); color:#012; text-align:center; padding:56px 16px}
-        header h1{margin:0; font-size:2rem; color:#012}
-        header p{margin:8px 0 0; opacity:0.95; color:#032}
-
-        main{max-width:960px; margin:28px auto; padding:0 16px}
-        section{background:var(--card); border-radius:10px; padding:22px; margin-bottom:18px; box-shadow:0 10px 30px rgba(2,26,27,0.06)}
-
-        h2{margin-top:0; color:#013238}
-        .about p{line-height:1.6; color:#064244}
-
-        .skills ul{list-style:none; padding:0; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:10px}
-        .skills li{background:var(--primary-cyan); color:#022; padding:8px 12px; border-radius:999px; font-weight:600; box-shadow:0 4px 14px rgba(0,0,0,0.06)}
-
-        .projects .project{border-left:6px solid var(--secondary-teal); padding:12px; margin-bottom:12px; border-radius:6px; background:linear-gradient(180deg, rgba(1,34,35,0.01), transparent)}
-        .projects p{margin:8px 0 0; color:#064244}
-
-        .actions{margin-top:12px}
-        a.button{display:inline-block; background:var(--secondary-teal); color:#fff; padding:10px 14px; border-radius:8px; text-decoration:none; font-weight:700; transition:transform .12s ease, box-shadow .12s ease}
-        a.button:hover{transform:translateY(-3px); box-shadow:0 10px 22px rgba(0,139,150,0.18)}
-
-        footer{ text-align:center; padding:18px 8px; font-size:0.95rem; color:#073d3f }
-
-        /* responsive */
-        @media (max-width:640px){ header{padding:36px 12px} header h1{font-size:1.5rem} }
-    </style>
+    <title>Personal Portfolio — Cybersecurity</title>
+    <link rel="stylesheet" href="index.css">
+    <meta name="description" content="Personal portfolio page for a cybersecurity professional">
 </head>
 <body>
-    <header>
-        <h1>Firstname Lastname</h1>
-        <p>Cybersecurity Analyst — Threat Hunting · Penetration Testing · Incident Response</p>
+    <header class="site-header">
+        <div class="container">
+            <h1 class="site-title">Your Name</h1>
+            <p class="tagline">Cybersecurity Analyst — Threat Hunting · Penetration Testing · Incident Response</p>
+        </div>
     </header>
 
-    <main>
+    <main class="container">
         <section class="about">
             <h2>About Me</h2>
-            <p>I am a cybersecurity professional focused on threat hunting, incident response, and secure system design. I build detection tooling, perform penetration tests, and automate repetitive analysis with Python and open-source tools. I enjoy contributing to CTFs, improving detection coverage, and mentoring junior analysts.</p>
+            <p>I am a cybersecurity professional specializing in threat hunting, incident response, and secure system design. I enjoy building tooling to automate detection, participating in CTFs, and mentoring others to improve their security skills.</p>
         </section>
 
         <section class="skills">
@@ -67,20 +35,18 @@
 
         <section class="projects">
             <h2>Projects</h2>
-            <div class="project">
+            <article class="project">
                 <h3>Network Traffic Analyzer</h3>
-                <p>Python/Scapy-based tool to parse PCAPs, extract suspicious flows, and generate IOC reports for triage.</p>
-                <div class="actions"><a class="button" href="#">View Project</a></div>
-            </div>
+                <p>Python/Scapy utility for parsing PCAPs and extracting suspicious flows to accelerate triage.</p>
+            </article>
 
-            <div class="project">
-                <h3>CTF Writeups & Tools</h3>
-                <p>Collection of CTF writeups and custom tools for reverse engineering and web-exploitation challenges.</p>
-                <div class="actions"><a class="button" href="#">View Project</a></div>
-            </div>
+            <article class="project">
+                <h3>CTF Tooling & Writeups</h3>
+                <p>Collection of CTF solutions and small tools for reverse engineering and web exploitation challenges.</p>
+            </article>
         </section>
 
-        <footer>
+        <footer class="site-footer">
             <p>Contact: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
         </footer>
     </main>
