@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marks Table — Exercise 1</title>
+  <style>
+    :root{
+      --excel-green: #217346; /* header green */
+      --excel-dark: #185d38; /* darker green for borders and hover */
+      --light-green: #f3fbf3; /* stripe */
+      --white: #ffffff;
+    }
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--white);
+      color: #0b2d18;
+      padding: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card{
+      width: 760px;
+      box-shadow: 0 6px 18px rgba(33,115,70,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(33,115,70,0.12);
+    }
+    header{
+      background: var(--excel-green);
+      color: var(--white);
+      padding: 16px 20px;
+    }
+    header h1{
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+    }
+    thead th{
+      text-align: left;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, var(--excel-green), var(--excel-dark));
+      color: var(--white);
+      font-weight: 600;
+      border-bottom: 2px solid var(--excel-dark);
+      font-size: 14px;
+    }
+    tbody td{
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(33,115,70,0.06);
+      font-size: 14px;
+    }
+    tbody tr:nth-child(even){
+      background: var(--light-green);
+    }
+    tbody tr:hover{
+      background: rgba(33,115,70,0.06);
+    }
+    .total-cell{
+      font-weight: 700;
+      color: var(--excel-dark);
+      text-align: right;
+      padding-right: 18px;
+    }
+    .center{
+      text-align: center;
+    }
+    @media (max-width:640px){
+      .card{width: 100%; padding: 0 10px}
+      thead th, tbody td{padding: 10px 8px}
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <h1>Student Marks — Exercise 1</h1>
+    </header>
+
+    <table aria-label="Marks table">
+      <thead>
+        <tr>
+          <th scope="col">Roll No</th>
+          <th scope="col">Name</th>
+          <th scope="col" class="center">Subject 1</th>
+          <th scope="col" class="center">Subject 2</th>
+          <th scope="col" class="center">Subject 3</th>
+          <th scope="col" class="center">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <td>Alice Johnson</td>
+          <td class="center">85</td>
+          <td class="center">78</td>
+          <td class="center">92</td>
+          <td class="total-cell">255</td>
+        </tr>
+        <tr>
+          <td>02</td>
+          <td>Benjamin Lee</td>
+          <td class="center">74</td>
+          <td class="center">81</td>
+          <td class="center">79</td>
+          <td class="total-cell">234</td>
+        </tr>
+        <tr>
+          <td>03</td>
+          <td>Chitra Patel</td>
+          <td class="center">90</td>
+          <td class="center">95</td>
+          <td class="center">88</td>
+          <td class="total-cell">273</td>
+        </tr>
+        <tr>
+          <td>04</td>
+          <td>David Kim</td>
+          <td class="center">68</td>
+          <td class="center">73</td>
+          <td class="center">70</td>
+          <td class="total-cell">211</td>
+        </tr>
+        <tr>
+          <td>05</td>
+          <td>Elena Rossi</td>
+          <td class="center">82</td>
+          <td class="center">87</td>
+          <td class="center">84</td>
+          <td class="total-cell">253</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
