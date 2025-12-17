@@ -1,52 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>Redgear Controller — Product</title>
-	<style>
-		:root{ --primary:#000; --accent:#c8102e; --text:#fff }
-		body{ font-family:Arial, Helvetica, sans-serif; background:#121212; color:var(--text); display:flex; align-items:center; justify-content:center; height:100vh; margin:0 }
-		.card{ background:var(--primary); border:1px solid rgba(255,255,255,0.06); width:320px; border-radius:8px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,0.6); margin:16px }
-		.card img{ width:100%; height:220px; object-fit:cover; display:block; background:#111 }
-		.card-body{ padding:16px }
-		.title{ font-size:1.125rem; margin:0 0 8px 0; color:var(--text) }
-		.desc{ font-size:0.95rem; color:#ddd; margin:0 0 12px }
-		.price{ font-weight:700; color:var(--accent); font-size:1.1rem; margin-bottom:12px }
-		.buy{ display:inline-block; background:var(--accent); color:#fff; border:none; padding:10px 14px; border-radius:6px; cursor:pointer; text-decoration:none; transition:transform .12s ease, box-shadow .12s ease }
-		.buy:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(200,16,46,0.25) }
-		.meta{ display:flex; justify-content:space-between; align-items:center }
-		.badge{ background:rgba(255,255,255,0.03); color:#fff; padding:6px 8px; border-radius:4px; font-size:0.85rem }
-		.fallback{ display:flex; align-items:center; justify-content:center; height:220px; background:linear-gradient(180deg,#111,#000); color:#ccc }
-		a.buy:active{ transform:translateY(0) }
-		/* Responsive */
-		@media (max-width:420px){ .card{ width:92vw } }
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redgear Controller — Product</title>
+    <link rel="stylesheet" href="index.css">
+    <meta name="description" content="Redgear Controller product card">
+    <meta name="author" content="">
+    <style>/* Minimal in-head reset to avoid FOUC */
+        html,body{height:100%;}
+        body{margin:0}
+    </style>
 </head>
 <body>
-	<article class="card">
-		<!-- Image file should be named `image.jpg` and placed in the same folder as this HTML file -->
-		<img src="image.jpg" alt="Redgear Controller" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
-		<div class="fallback" style="display:none">Redgear Controller Image</div>
+    <main class="product-card" role="main">
+        <!-- Place `image.jpg` next to this file (Downloads folder) -->
+        <img class="product-image" src="image.jpg" alt="Redgear Controller" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="fallback" style="display:none">Redgear Controller</div>
 
-		<div class="card-body">
-			<h2 class="title">Redgear Controller</h2>
-			<p class="desc">Ergonomic wireless gaming controller with responsive buttons and precise analog sticks — engineered for comfort and performance.</p>
+        <div class="product-info">
+            <h1 class="title">Redgear Controller</h1>
+            <p class="desc">Ergonomic wireless gaming controller with responsive buttons and precise analog sticks — engineered for comfort and performance.</p>
 
-			<div class="meta">
-				<div class="price">$49.99</div>
-				<div class="badge">In Stock</div>
-			</div>
+            <div class="meta">
+                <div class="price">$49.99</div>
+                <button class="buy" aria-label="Buy Redgear Controller">Buy Now</button>
+            </div>
+        </div>
+    </main>
 
-			<div style="margin-top:12px">
-				<a class="buy" href="#">Buy Now</a>
-			</div>
-		</div>
-	</article>
-
-	<script>
-		// Optional: show a simple alert on buy click
-		document.querySelector('.buy').addEventListener('click', function(e){ e.preventDefault(); alert('Added Redgear Controller to cart!') })
-	</script>
+    <script>
+        document.querySelector('.buy').addEventListener('click', function(e){ e.preventDefault(); alert('Added Redgear Controller to cart!'); });
+    </script>
 </body>
 </html>
