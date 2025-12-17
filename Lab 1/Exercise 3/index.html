@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>User Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background:#f7f7f7 }
+        .registration { max-width: 600px; margin: 0 auto; background:#fff; padding:20px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+        h1 { margin-top: 0 }
+        label { display:block; margin-top:12px; font-weight:600 }
+        input[type="text"], input[type="email"], input[type="date"], input[type="tel"], input[type="password"], input[type="file"] {
+            width:100%; padding:8px; box-sizing:border-box; margin-top:6px; border:1px solid #ccc; border-radius:4px;
+        }
+        .row { display:flex; gap:12px; }
+        .row > div { flex:1 }
+        .note { font-size:0.9rem; color:#666; margin-top:8px }
+        .actions { margin-top:16px }
+        button { padding:10px 16px; border:none; background:#2b7cff; color:#fff; border-radius:4px; cursor:pointer }
+        button:disabled { opacity:0.6; cursor:not-allowed }
+    </style>
+</head>
+<body>
+    <main class="registration">
+        <h1>Create an Account</h1>
+
+        <form action="#" method="post" enctype="multipart/form-data">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Jane Doe" required aria-required="true">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required aria-required="true">
+
+            <div class="row">
+                <div>
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" required aria-required="true">
+                </div>
+                <div>
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+1234567890" pattern="[0-9+ \-()]{7,20}" required aria-required="true">
+                </div>
+            </div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" minlength="8" placeholder="At least 8 characters" required aria-required="true">
+            <div class="note">Password must be at least 8 characters.</div>
+
+            <label for="avatar">Choose Profile Picture (optional)</label>
+            <input type="file" id="avatar" name="avatar" accept="image/*">
+
+            <label style="margin-top:12px; display:flex; align-items:center">
+                <input type="checkbox" id="terms" name="terms" required aria-required="true" style="margin-right:8px">
+                <span>I accept the <a href="#" target="_blank">Terms &amp; Conditions</a></span>
+            </label>
+
+            <div class="actions">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
