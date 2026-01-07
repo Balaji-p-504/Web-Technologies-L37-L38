@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration & Management</title>
+  <!-- Exercise 4: Registration & Management System -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header: title and global actions -->
+  <header class="header">
+    <h1>User Registration & Management</h1>
+    <div class="actions">
+      <button id="refreshBtn" type="button" class="btn secondary">Refresh</button>
+      <button id="clearAllBtn" type="button" class="btn danger">Clear All Users</button>
+    </div>
+  </header>
+
+  <!-- Main layout: registration form + users table -->
+  <main class="container">
+    <!-- Registration Form -->
+    <section class="panel" aria-label="Registration form">
+      <h2>Register New User</h2>
+      <form id="regForm" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Enter name" required>
+          <div class="error" id="errName"></div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Enter email" required>
+          <div class="error" id="errEmail"></div>
+        </div>
+        <div class="field">
+          <label for="mobile">Mobile Number</label>
+          <input id="mobile" name="mobile" type="tel" placeholder="10-digit mobile" inputmode="numeric" pattern="\\d{10}" maxlength="10" required>
+          <div class="error" id="errMobile"></div>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Minimum 6 characters" minlength="6" required>
+          <div class="strength" id="pwdStrength" aria-live="polite">Strength: </div>
+          <div class="error" id="errPassword"></div>
+        </div>
+        <div class="actions-row">
+          <button id="submitBtn" type="submit" class="btn primary">Submit</button>
+        </div>
+        <div class="form-status" id="formStatus" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- Users Table -->
+    <section class="panel" aria-label="Registered users">
+      <h2>Registered Users</h2>
+      <div class="table-wrap">
+        <table class="table" id="usersTable" aria-describedby="Registered users table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Mobile Number</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTbody">
+            <!-- Rows rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast notifications container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
