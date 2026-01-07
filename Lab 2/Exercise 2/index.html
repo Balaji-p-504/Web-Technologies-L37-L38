@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimedia Web Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        section {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        video, audio {
+            display: block;
+            margin: 20px auto;
+            width: 100%;
+        }
+        .time-display {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 10px;
+        }
+        /* --- Modified: Layout and styling for vertical volume controls --- */
+        .media-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        .media-main {
+            flex: 1 1 auto;
+        }
+        .volume-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 56px;
+        }
+        .volume-tower {
+            height: 160px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Vertical slider via rotation for broad browser support */
+        .volume-vertical {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 160px; /* becomes height after rotation */
+            height: 40px; /* becomes width after rotation */
+            transform: rotate(-90deg);
+            transform-origin: center;
+            background: transparent;
+        }
+        /* Track */
+        .volume-vertical::-webkit-slider-runnable-track {
+            height: 6px;
+            background: linear-gradient(90deg, #ddd, #bbb);
+            border-radius: 4px;
+        }
+        .volume-vertical::-moz-range-track {
+            height: 6px;
+            background: #ccc;
+            border-radius: 4px;
+        }
+        /* Thumb */
+        .volume-vertical::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #555;
+            border: 2px solid #fff;
+            margin-top: -5px; /* center on track */
+        }
+        .volume-vertical::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #555;
+            border: 2px solid #fff;
+        }
+        .volume-btn {
+            border: 1px solid #ccc;
+            background: #fafafa;
+            color: #333;
+            border-radius: 6px;
+            padding: 6px 8px;
+            width: 100%;
+            cursor: pointer;
+        }
+        .volume-btn:active { background: #f0f0f0; }
+        .volume-label { font-size: 12px; color: #666; }
+        @media (max-width: 640px) {
+            .media-row { flex-direction: column; align-items: stretch; }
+            .volume-stack { width: 100%; flex-direction: row; justify-content: center; }
+            .volume-tower { height: 140px; }
+            .volume-vertical { width: 140px; height: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Multimedia Page</h1>
+
+    <section id="audio-section">
+        <h2>Audio Player</h2>
+        <!-- Modified: Wrap player with custom vertical volume controls -->
+        <div class="media-row">
+            <div class="media-main">
+                <!-- 
+                    The 'controls' attribute adds play, pause, volume, and seeking.
+                    Replace "audio.mp3" with the path to your audio file.
+                -->
+                <audio id="myAudio" controls src="audio.mp3">
+                    Your browser does not support the audio element.
+                </audio>
+                <p class="time-display">Current Time: <span id="audioTime">00:00:00.000</span></p>
+            </div>
+            <div class="volume-stack" aria-label="Audio volume controls">
+                <div class="volume-label">Volume</div>
+                <div class="volume-tower">
+                    <!-- Modified: Vertical volume slider -->
+                    <input id="audioVolume" class="volume-vertical" type="range" min="0" max="1" step="0.01" value="1" aria-label="Audio volume" />
+                </div>
+                <!-- Modified: Mute and step controls -->
+                <button id="audioMute" class="volume-btn" type="button" aria-label="Mute audio">Mute</button>
+                <div style="display:flex; gap:8px; width:100%;">
+                    <button id="audioVolDown" class="volume-btn" type="button" aria-label="Volume down">-</button>
+                    <button id="audioVolUp" class="volume-btn" type="button" aria-label="Volume up">+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="video-section">
+        <h2>Video Player</h2>
+        <!-- Modified: Wrap player with custom vertical volume controls -->
+        <div class="media-row">
+            <div class="media-main">
+                <!-- 
+                    The 'controls' attribute adds play, pause, volume, and seeking.
+                    Replace "video.mp4" with the path to your video file.
+                -->
+                <video id="myVideo" controls width="100%">
+                    <source src="video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p class="time-display">Current Time: <span id="videoTime">00:00:00.000</span></p>
+            </div>
+            <div class="volume-stack" aria-label="Video volume controls">
+                <div class="volume-label">Volume</div>
+                <div class="volume-tower">
+                    <!-- Modified: Vertical volume slider -->
+                    <input id="videoVolume" class="volume-vertical" type="range" min="0" max="1" step="0.01" value="1" aria-label="Video volume" />
+                </div>
+                <!-- Modified: Mute and step controls -->
+                <button id="videoMute" class="volume-btn" type="button" aria-label="Mute video">Mute</button>
+                <div style="display:flex; gap:8px; width:100%;">
+                    <button id="videoVolDown" class="volume-btn" type="button" aria-label="Volume down">-</button>
+                    <button id="videoVolUp" class="volume-btn" type="button" aria-label="Volume up">+</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Modified: Elements for players and time displays
+        const audioPlayer = document.getElementById('myAudio');
+        const audioTimeDisplay = document.getElementById('audioTime');
+        const videoPlayer = document.getElementById('myVideo');
+        const videoTimeDisplay = document.getElementById('videoTime');
+
+        // Modified: Volume control elements
+        const audioVolume = document.getElementById('audioVolume');
+        const audioMute = document.getElementById('audioMute');
+        const audioVolUp = document.getElementById('audioVolUp');
+        const audioVolDown = document.getElementById('audioVolDown');
+        const videoVolume = document.getElementById('videoVolume');
+        const videoMute = document.getElementById('videoMute');
+        const videoVolUp = document.getElementById('videoVolUp');
+        const videoVolDown = document.getElementById('videoVolDown');
+
+        // Modified: Format time as HH:MM:SS.mmm (zero-padded)
+        function formatTimeFull(seconds) {
+            const totalMs = Math.floor(seconds * 1000);
+            const ms = totalMs % 1000;
+            const totalSeconds = Math.floor(totalMs / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const secs = totalSeconds % 60;
+            const hh = String(hours).padStart(2, '0');
+            const mm = String(minutes).padStart(2, '0');
+            const ss = String(secs).padStart(2, '0');
+            const mmm = String(ms).padStart(3, '0');
+            return `${hh}:${mm}:${ss}.${mmm}`;
+        }
+
+        // Modified: Update time displays with milliseconds
+        function bindTimeUpdates(player, displayEl) {
+            player.addEventListener('timeupdate', () => {
+                displayEl.textContent = formatTimeFull(player.currentTime);
+            });
+        }
+        bindTimeUpdates(audioPlayer, audioTimeDisplay);
+        bindTimeUpdates(videoPlayer, videoTimeDisplay);
+
+        // Modified: Setup vertical volume controls with mute and step (+/-)
+        function setupVolumeControls(mediaEl, { slider, muteBtn, upBtn, downBtn }) {
+            let lastNonZeroVolume = mediaEl.volume || 1;
+
+            // Initialize slider with current volume
+            slider.value = String(mediaEl.muted ? 0 : mediaEl.volume);
+
+            // Keep slider in sync when volume/mute changes elsewhere
+            mediaEl.addEventListener('volumechange', () => {
+                if (!mediaEl.muted && mediaEl.volume > 0) {
+                    lastNonZeroVolume = mediaEl.volume;
+                }
+                slider.value = String(mediaEl.muted ? 0 : mediaEl.volume);
+                muteBtn.textContent = mediaEl.muted ? 'Unmute' : 'Mute';
+            });
+
+            // Slider -> media volume
+            slider.addEventListener('input', () => {
+                const v = parseFloat(slider.value);
+                mediaEl.volume = Math.min(1, Math.max(0, v));
+                mediaEl.muted = v <= 0;
+                if (v > 0) lastNonZeroVolume = v;
+            });
+
+            // Mute toggle
+            muteBtn.addEventListener('click', () => {
+                if (mediaEl.muted) {
+                    mediaEl.muted = false;
+                    mediaEl.volume = lastNonZeroVolume || 0.5;
+                } else {
+                    mediaEl.muted = true;
+                }
+            });
+
+            // Volume step helpers
+            function stepVolume(delta) {
+                const current = mediaEl.muted ? 0 : mediaEl.volume;
+                const next = Math.min(1, Math.max(0, current + delta));
+                mediaEl.muted = next <= 0;
+                mediaEl.volume = next;
+            }
+            upBtn.addEventListener('click', () => stepVolume(0.1));
+            downBtn.addEventListener('click', () => stepVolume(-0.1));
+        }
+
+        setupVolumeControls(audioPlayer, {
+            slider: audioVolume,
+            muteBtn: audioMute,
+            upBtn: audioVolUp,
+            downBtn: audioVolDown
+        });
+
+        setupVolumeControls(videoPlayer, {
+            slider: videoVolume,
+            muteBtn: videoMute,
+            upBtn: videoVolUp,
+            downBtn: videoVolDown
+        });
+    </script>
+
+</body>
+</html>
