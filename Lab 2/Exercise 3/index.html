@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Board</title>
+  <!-- Exercise 3: Mini Task Board -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Script loaded at end as well for robustness -->
+</head>
+<body>
+  <!-- Header: title, input, and add button -->
+  <header class="header">
+    <h1>Task Board</h1>
+    <div class="controls" role="form" aria-label="Add new task">
+      <input id="taskInput" type="text" placeholder="Enter task name" aria-label="Task name">
+      <button id="addTaskBtn" type="button">Add Task</button>
+      <span id="inputError" class="input-error" aria-live="polite"></span>
+    </div>
+  </header>
+
+  <!-- Board: three columns droppable -->
+  <main class="board">
+    <div class="columns">
+      <section class="column" data-status="todo" aria-label="To Do">
+        <h2>To Do</h2>
+        <div class="dropzone" id="todo" aria-dropeffect="move"></div>
+      </section>
+      <section class="column" data-status="inprogress" aria-label="In Progress">
+        <h2>In Progress</h2>
+        <div class="dropzone" id="inprogress" aria-dropeffect="move"></div>
+      </section>
+      <section class="column" data-status="completed" aria-label="Completed">
+        <h2>Completed</h2>
+        <div class="dropzone" id="completed" aria-dropeffect="move"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Toast notifications container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
