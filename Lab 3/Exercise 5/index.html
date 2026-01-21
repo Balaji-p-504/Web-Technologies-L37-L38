@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Stage Form Workflow</title>
+  <style>
+    :root{--bg:#ffffff;--text:#222;--muted:#5f6a72;--green:#2e7d32;--border:#dfe3e6;--shadow:rgba(46,125,50,0.15)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:var(--text);background:var(--bg)}
+    header{padding:16px 20px;text-align:center;color:var(--green)}
+    .container{max-width:880px;margin:0 auto;padding:16px 20px}
+    .panel{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
+    .panel h2{margin:0 0 12px;color:var(--muted);font-size:16px}
+    .progress{height:12px;background:#fff;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+    .bar{height:100%;width:0;background:var(--green);transition:width .2s ease}
+    .steps{display:grid;grid-template-columns:1fr;gap:14px;margin-top:14px}
+    .field{display:flex;flex-direction:column;margin:8px 0}
+    .field label{font-size:13px;color:var(--muted);margin-bottom:6px}
+    .input{padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;color:#111;outline:none}
+    .input:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--shadow)}
+    .error{font-size:12px;color:var(--green);min-height:16px;margin-top:6px}
+    .actions{display:flex;gap:10px;margin-top:10px}
+    .btn{padding:10px 12px;border-radius:8px;border:1px solid var(--green);background:var(--green);color:#fff;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--green)}
+    .hidden{display:none}
+    .summary{border:1px solid var(--border);border-radius:8px;padding:10px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Multi-Stage Form</h1>
+  </header>
+  <main class="container">
+    <section class="panel">
+      <div class="progress" aria-label="Progress">
+        <div id="progressBar" class="bar"></div>
+      </div>
+      <div id="progressText" style="margin-top:8px;color:var(--muted);font-size:13px">Step 1 of 4</div>
+
+      <div class="steps">
+        <div id="step1">
+          <h2>Step 1: Basic Info</h2>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" class="input" placeholder="Your full name" aria-describedby="errName">
+            <div id="errName" class="error" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" class="input" placeholder="name@example.com" aria-describedby="errEmail">
+            <div id="errEmail" class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div id="step2" class="hidden">
+          <h2>Step 2: Details</h2>
+          <div class="field">
+            <label for="age">Age</label>
+            <input id="age" type="number" min="1" class="input" placeholder="Your age" aria-describedby="errAge">
+            <div id="errAge" class="error" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label for="phone">Mobile Number</label>
+            <input id="phone" type="tel" class="input" placeholder="10-digit mobile" aria-describedby="errPhone" maxlength="10">
+            <div id="errPhone" class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div id="step3" class="hidden">
+          <h2>Step 3: Preferences</h2>
+          <div class="field">
+            <label>Contact Preference</label>
+            <div style="display:flex;gap:12px;align-items:center">
+              <label><input type="radio" name="pref" value="email"> Email</label>
+              <label><input type="radio" name="pref" value="phone"> Phone</label>
+            </div>
+            <div id="errPref" class="error" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label>Topics</label>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <label><input type="checkbox" name="topics" value="Web"> Web</label>
+              <label><input type="checkbox" name="topics" value="AI"> AI</label>
+              <label><input type="checkbox" name="topics" value="Networks"> Networks</label>
+              <label><input type="checkbox" name="topics" value="Security"> Security</label>
+            </div>
+            <div id="errTopics" class="error" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div id="step4" class="hidden">
+          <h2>Step 4: Review & Submit</h2>
+          <div class="summary" id="summaryBox"></div>
+          <div class="field" style="margin-top:10px">
+            <label><input id="accept" type="checkbox"> I confirm the information is correct</label>
+            <div id="errAccept" class="error" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="backBtn" class="btn ghost" disabled>Back</button>
+        <button id="nextBtn" class="btn">Next</button>
+      </div>
+      <div id="globalStatus" class="error" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="srcipt.js"></script>
+</body>
+</html>
