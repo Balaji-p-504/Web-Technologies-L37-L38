@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 5 Exercise 1 - Employee Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1>Employee Management System</h1>
+    </header>
+    <main class="main">
+      <section class="panel" aria-label="Employee form">
+        <form id="empForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="empIdInput">ID</label>
+              <input id="empIdInput" name="empId" type="number" min="1" step="1">
+              <div id="empIdError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="empNameInput">Name</label>
+              <input id="empNameInput" name="name" type="text">
+              <div id="empNameError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="empDeptInput">Department</label>
+              <input id="empDeptInput" name="department" type="text">
+              <div id="empDeptError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="empSalaryInput">Salary</label>
+              <input id="empSalaryInput" name="salary" type="text">
+              <div id="empSalaryError" class="field-error"></div>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" id="btnSave" class="btn">Save</button>
+            <button type="button" id="btnReset" class="btn btn-secondary">Reset</button>
+            <p id="statusText" class="status-text"></p>
+          </div>
+        </form>
+      </section>
+      <section class="panel" aria-label="Employee table">
+        <div class="table-wrapper">
+          <table id="empTable">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="empTableBody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div id="toastSuccess" class="toast toast-success" role="status" aria-live="polite">
+        <span id="toastSuccessText">Employee added/updated/deleted successfully</span>
+      </div>
+      <div id="toastError" class="toast toast-error" role="alert" aria-live="polite">
+        <span id="toastErrorText"></span>
+        <button type="button" id="toastErrorClose">×</button>
+      </div>
+    </main>
+  </div>
+  <script>
+    var EmpApp = (function () {
+      "use strict";
+
+      var empForm = document.getElementById("empForm");
+      var empIdInput = document.getElementById("empIdInput");
+      var empNameInput = document.getElementById("empNameInput");
+      var empDeptInput = document.getElementById("empDeptInput");
+      var empSalaryInput = document.getElementById("empSalaryInput");
+      var empIdError = document.getElementById("empIdError");
+      var empNameError = document.getElementById("empNameError");
+      var empDeptError = document.getElementById("empDeptError");
+      var empSalaryError = document.getElementById("empSalaryError");
+      var btnSave = document.getElementById("btnSave");
+      var btnReset = document.getElementById("btnReset");
+      var statusText = document.getElementById("statusText");
+      var empTable = document.getElementById("empTable");
+      var empTableBody = document.getElementById("empTableBody");
+      var toastSuccess = document.getElementById("toastSuccess");
+      var toastSuccessText = document.getElementById("toastSuccessText");
+      var toastError = document.getElementById("toastError");
+      var toastErrorText = document.getElementById("toastErrorText");
+      var toastErrorClose = document.getElementById("toastErrorClose");
+
+      var empXmlDoc = null;
+      var currentEditId = null;
+      var isBusy = false;
+      var retryCount = 0;
+
+      function showSuccessToast(message) {
+        toastSuccessText.textContent = message || "Employee added/updated/deleted successfully";
+        toastSuccess.classList.add("show");
+        setTimeout(function () {
+          toastSuccess.classList.remove("show");
+        }, 3000);
+      }
+
+      function showErrorToast(message) {
+        toastErrorText.textContent = message || "Error";
+        toastError.classList.add("show");
+      }
+
+      function hideErrorToast() {
+        toastError.classList.remove("show");
+      }
+
+      function setBusy(active) {
+        isBusy = active;
+        btnSave.disabled = active;
+        btnReset.disabled = active;
+        if (active) {
+          statusText.classList.add("loading");
+        } else {
+          statusText.classList.remove("loading");
+        }
+      }
+
+      function sanitizeText(text) {
+        if (!text) {
+          return "";
+        }
+        return String(text)
+          .replace(/&/g, "")
+          .replace(/</g, "")
+          .replace(/>/g, "");
+      }
+
+      function clearFieldErrors() {
+        empIdError.textContent = "";
+        empNameError.textContent = "";
+        empDeptError.textContent = "";
+        empSalaryError.textContent = "";
+      }
+
+      function validateForm() {
+        clearFieldErrors();
+        var valid = true;
+        var idValue = empIdInput.value ? String(empIdInput.value).trim() : "";
+        var nameValue = empNameInput.value ? String(empNameInput.value).trim() : "";
+        var deptValue = empDeptInput.value ? String(empDeptInput.value).trim() : "";
+        var salaryValue = empSalaryInput.value ? String(empSalaryInput.value).trim() : "";
+
+        if (!idValue) {
+          valid = false;
+          empIdError.textContent = "ID is required";
+        } else if (!/^\d+$/.test(idValue)) {
+          valid = false;
+          empIdError.textContent = "ID must be an integer";
+        }
+
+        if (!nameValue) {
+          valid = false;
+          empNameError.textContent = "Name is required";
+        } else if (nameValue.length < 3 || nameValue.length > 50) {
+          valid = false;
+          empNameError.textContent = "Name must be 3–50 characters";
+        }
+
+        if (!deptValue) {
+          valid = false;
+          empDeptError.textContent = "Department is required";
+        } else if (deptValue.length < 2 || deptValue.length > 30) {
+          valid = false;
+          empDeptError.textContent = "Department must be 2–30 characters";
+        }
+
+        if (!salaryValue) {
+          valid = false;
+          empSalaryError.textContent = "Salary is required";
+        } else if (!/^\d{1,6}(\.\d{1,2})?$/.test(salaryValue)) {
+          valid = false;
+          empSalaryError.textContent = "Salary must be a positive decimal (max 2 decimals)";
+        }
+
+        return valid;
+      }
+
+      function getNextEmpId() {
+        var maxId = 0;
+        if (!empXmlDoc) {
+          return 1;
+        }
+        var nodes = empXmlDoc.getElementsByTagName("employee");
+        for (var i = 0; i < nodes.length; i++) {
+          var idNode = nodes[i].getElementsByTagName("empId")[0];
+          if (idNode && idNode.textContent) {
+            var n = parseInt(idNode.textContent, 10);
+            if (!isNaN(n) && n > maxId) {
+              maxId = n;
+            }
+          }
+        }
+        return maxId + 1;
+      }
+
+      function populateNextIdIfEmpty() {
+        if (!empIdInput.value) {
+          empIdInput.value = String(getNextEmpId());
+        }
+      }
+
+      function getEmployeeNodeById(empId) {
+        if (!empXmlDoc) {
+          return null;
+        }
+        var nodes = empXmlDoc.getElementsByTagName("employee");
+        for (var i = 0; i < nodes.length; i++) {
+          var idNode = nodes[i].getElementsByTagName("empId")[0];
+          if (idNode && idNode.textContent === String(empId)) {
+            return nodes[i];
+          }
+        }
+        return null;
+      }
+
+      function buildRowFromNode(empNode) {
+        var idNode = empNode.getElementsByTagName("empId")[0];
+        var nameNode = empNode.getElementsByTagName("name")[0];
+        var deptNode = empNode.getElementsByTagName("department")[0];
+        var salaryNode = empNode.getElementsByTagName("salary")[0];
+
+        var idText = idNode ? idNode.textContent : "";
+        var nameText = nameNode ? nameNode.textContent : "";
+        var deptText = deptNode ? deptNode.textContent : "";
+        var salaryText = salaryNode ? salaryNode.textContent : "";
+
+        var tr = document.createElement("tr");
+        tr.setAttribute("data-id", idText);
+
+        var tdId = document.createElement("td");
+        tdId.textContent = idText;
+        var tdName = document.createElement("td");
+        tdName.textContent = nameText;
+        var tdDept = document.createElement("td");
+        tdDept.textContent = deptText;
+        var tdSalary = document.createElement("td");
+        tdSalary.textContent = salaryText;
+
+        var tdActions = document.createElement("td");
+        var btnEdit = document.createElement("button");
+        btnEdit.type = "button";
+        btnEdit.className = "btn btn-small";
+        btnEdit.textContent = "Edit";
+        btnEdit.setAttribute("data-id", idText);
+
+        var btnDelete = document.createElement("button");
+        btnDelete.type = "button";
+        btnDelete.className = "btn btn-small btn-secondary";
+        btnDelete.textContent = "Delete";
+        btnDelete.setAttribute("data-id", idText);
+
+        tdActions.appendChild(btnEdit);
+        tdActions.appendChild(btnDelete);
+
+        tr.appendChild(tdId);
+        tr.appendChild(tdName);
+        tr.appendChild(tdDept);
+        tr.appendChild(tdSalary);
+        tr.appendChild(tdActions);
+
+        return tr;
+      }
+
+      function clearTableBody() {
+        while (empTableBody.firstChild) {
+          empTableBody.removeChild(empTableBody.firstChild);
+        }
+      }
+
+      function showEmptyRow() {
+        clearTableBody();
+        var tr = document.createElement("tr");
+        tr.className = "row-empty";
+        var td = document.createElement("td");
+        td.colSpan = 5;
+        td.textContent = "No employees found";
+        tr.appendChild(td);
+        empTableBody.appendChild(tr);
+      }
+
+      function renderAllEmployees() {
+        if (!empXmlDoc) {
+          showEmptyRow();
+          return;
+        }
+        var nodes = empXmlDoc.getElementsByTagName("employee");
+        if (!nodes.length) {
+          showEmptyRow();
+          return;
+        }
+        clearTableBody();
+        for (var i = 0; i < nodes.length; i++) {
+          var row = buildRowFromNode(nodes[i]);
+          empTableBody.appendChild(row);
+        }
+      }
+
+      function updateRowForEmployee(empNode) {
+        var idNode = empNode.getElementsByTagName("empId")[0];
+        var idText = idNode ? idNode.textContent : "";
+        var rows = empTableBody.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getAttribute("data-id") === idText) {
+            var newRow = buildRowFromNode(empNode);
+            empTableBody.replaceChild(newRow, rows[i]);
+            return;
+          }
+        }
+        var row = buildRowFromNode(empNode);
+        empTableBody.appendChild(row);
+      }
+
+      function removeRowById(empId) {
+        var rows = empTableBody.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getAttribute("data-id") === String(empId)) {
+            empTableBody.removeChild(rows[i]);
+            break;
+          }
+        }
+        if (!empTableBody.getElementsByTagName("tr").length) {
+          showEmptyRow();
+        }
+      }
+
+      function validateXmlDocument(xmlDoc) {
+        if (!xmlDoc || !xmlDoc.documentElement) {
+          return false;
+        }
+        var root = xmlDoc.documentElement;
+        if (root.nodeName !== "employees") {
+          return false;
+        }
+        return true;
+      }
+
+      function sendRequest(method, url, body, onSuccess, onError, allowRetry) {
+        setBusy(true);
+        statusText.textContent = "Processing request...";
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url, true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            setBusy(false);
+            if (xhr.status === 200) {
+              onSuccess(xhr);
+            } else if (xhr.status === 404) {
+              onError(xhr, 404);
+            } else if (xhr.status === 500) {
+              onError(xhr, 500);
+            } else {
+              if (allowRetry && retryCount < 1) {
+                retryCount++;
+                sendRequest(method, url, body, onSuccess, onError, false);
+              } else {
+                showErrorToast("Network error—please refresh");
+              }
+            }
+          }
+        };
+        xhr.onerror = function () {
+          setBusy(false);
+          if (allowRetry && retryCount < 1) {
+            retryCount++;
+            sendRequest(method, url, body, onSuccess, onError, false);
+          } else {
+            showErrorToast("Network error—please refresh");
+          }
+        };
+        if (body) {
+          xhr.setRequestHeader("Content-Type", "application/xml");
+          xhr.send(body);
+        } else {
+          xhr.send();
+        }
+      }
+
+      function saveXmlAndRefreshMessage(message) {
+        if (!empXmlDoc) {
+          return;
+        }
+        var serializer = new XMLSerializer();
+        var xmlString = serializer.serializeToString(empXmlDoc);
+        sendRequest(
+          "POST",
+          "employees.xml",
+          xmlString,
+          function () {
+            showSuccessToast(message);
+          },
+          function (xhr, code) {
+            if (code === 500) {
+              showErrorToast("Server error while saving data (500)");
+            } else if (code === 404) {
+              showErrorToast("Data file missing (404)");
+            } else {
+              showErrorToast("Network error—please refresh");
+            }
+          },
+          true
+        );
+      }
+
+      function loadEmployeesXml() {
+        retryCount = 0;
+        sendRequest(
+          "GET",
+          "employees.xml",
+          null,
+          function (xhr) {
+            try {
+              var xmlDoc = xhr.responseXML;
+              if (!validateXmlDocument(xmlDoc)) {
+                showErrorToast("Data file corrupted—contact administrator");
+                empTable.classList.add("hidden");
+                return;
+              }
+              empXmlDoc = xmlDoc;
+              empTable.classList.remove("hidden");
+              renderAllEmployees();
+              populateNextIdIfEmpty();
+            } catch (e) {
+              showErrorToast("Data file corrupted—contact administrator");
+              empTable.classList.add("hidden");
+            }
+          },
+          function (xhr, code) {
+            if (code === 404) {
+              var emptyXml = '<?xml version="1.0" encoding="UTF-8"?><employees></employees>';
+              sendRequest(
+                "POST",
+                "employees.xml",
+                emptyXml,
+                function () {
+                  loadEmployeesXml();
+                },
+                function () {
+                  showErrorToast("Unable to create data file");
+                },
+                true
+              );
+            } else if (code === 500) {
+              showErrorToast("Server error while loading data (500)");
+            } else {
+              showErrorToast("Network error—please refresh");
+            }
+          },
+          true
+        );
+      }
+
+      function resetForm() {
+        empForm.reset();
+        clearFieldErrors();
+        currentEditId = null;
+        btnSave.textContent = "Save";
+        statusText.textContent = "";
+        populateNextIdIfEmpty();
+      }
+
+      function handleFormSubmit(event) {
+        event.preventDefault();
+        if (isBusy) {
+          return;
+        }
+        if (!validateForm()) {
+          return;
+        }
+        var idValue = String(empIdInput.value).trim();
+        var nameValue = sanitizeText(empNameInput.value.trim());
+        var deptValue = sanitizeText(empDeptInput.value.trim());
+        var salaryValue = empSalaryInput.value.trim();
+
+        var existingNode = getEmployeeNodeById(idValue);
+        if (!currentEditId && existingNode) {
+          empIdError.textContent = "Duplicate ID not allowed";
+          return;
+        }
+
+        if (!empXmlDoc) {
+          var parser = new DOMParser();
+          empXmlDoc = parser.parseFromString('<?xml version="1.0" encoding="UTF-8"?><employees></employees>', "application/xml");
+        }
+
+        if (currentEditId) {
+          var nodeToUpdate = getEmployeeNodeById(currentEditId);
+          if (!nodeToUpdate) {
+            showErrorToast("Employee not found for update");
+            return;
+          }
+          var idNode = nodeToUpdate.getElementsByTagName("empId")[0];
+          var nameNode = nodeToUpdate.getElementsByTagName("name")[0];
+          var deptNode = nodeToUpdate.getElementsByTagName("department")[0];
+          var salaryNode = nodeToUpdate.getElementsByTagName("salary")[0];
+
+          if (idNode) {
+            idNode.textContent = idValue;
+          }
+          if (nameNode) {
+            nameNode.textContent = nameValue;
+          }
+          if (deptNode) {
+            deptNode.textContent = deptValue;
+          }
+          if (salaryNode) {
+            salaryNode.textContent = Number(salaryValue).toFixed(2);
+          }
+
+          updateRowForEmployee(nodeToUpdate);
+          saveXmlAndRefreshMessage("Employee updated successfully");
+          resetForm();
+        } else {
+          var root = empXmlDoc.documentElement;
+          var empNode = empXmlDoc.createElement("employee");
+          var idNodeNew = empXmlDoc.createElement("empId");
+          idNodeNew.textContent = idValue;
+          var nameNodeNew = empXmlDoc.createElement("name");
+          nameNodeNew.textContent = nameValue;
+          var deptNodeNew = empXmlDoc.createElement("department");
+          deptNodeNew.textContent = deptValue;
+          var salaryNodeNew = empXmlDoc.createElement("salary");
+          salaryNodeNew.textContent = Number(salaryValue).toFixed(2);
+
+          empNode.appendChild(idNodeNew);
+          empNode.appendChild(nameNodeNew);
+          empNode.appendChild(deptNodeNew);
+          empNode.appendChild(salaryNodeNew);
+
+          root.appendChild(empNode);
+          updateRowForEmployee(empNode);
+          saveXmlAndRefreshMessage("Employee added successfully");
+          resetForm();
+        }
+      }
+
+      function handleTableClick(event) {
+        var target = event.target;
+        if (target.tagName !== "BUTTON") {
+          return;
+        }
+        var id = target.getAttribute("data-id");
+        if (!id) {
+          return;
+        }
+        if (target.textContent === "Edit") {
+          var node = getEmployeeNodeById(id);
+          if (!node) {
+            showErrorToast("Employee not found");
+            return;
+          }
+          var idNode = node.getElementsByTagName("empId")[0];
+          var nameNode = node.getElementsByTagName("name")[0];
+          var deptNode = node.getElementsByTagName("department")[0];
+          var salaryNode = node.getElementsByTagName("salary")[0];
+          empIdInput.value = idNode ? idNode.textContent : "";
+          empNameInput.value = nameNode ? nameNode.textContent : "";
+          empDeptInput.value = deptNode ? deptNode.textContent : "";
+          empSalaryInput.value = salaryNode ? salaryNode.textContent : "";
+          currentEditId = id;
+          btnSave.textContent = "Update";
+          clearFieldErrors();
+          statusText.textContent = "Editing employee " + id;
+        } else if (target.textContent === "Delete") {
+          var confirmed = window.confirm("Delete this employee?");
+          if (!confirmed) {
+            return;
+          }
+          var nodeToDelete = getEmployeeNodeById(id);
+          if (!nodeToDelete) {
+            showErrorToast("Employee not found");
+            return;
+          }
+          var parent = nodeToDelete.parentNode;
+          parent.removeChild(nodeToDelete);
+          removeRowById(id);
+          saveXmlAndRefreshMessage("Employee deleted successfully");
+          if (currentEditId === id) {
+            resetForm();
+          }
+        }
+      }
+
+      function attachEvents() {
+        empForm.addEventListener("submit", handleFormSubmit);
+        btnReset.addEventListener("click", function () {
+          resetForm();
+        });
+        empTableBody.addEventListener("click", handleTableClick);
+        toastErrorClose.addEventListener("click", hideErrorToast);
+        empIdInput.addEventListener("focus", populateNextIdIfEmpty);
+      }
+
+      function init() {
+        attachEvents();
+        loadEmployeesXml();
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+
+      return {};
+    })();
+  </script>
+</body>
+</html>
+
