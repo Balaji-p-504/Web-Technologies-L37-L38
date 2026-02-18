@@ -1,0 +1,2 @@
+i used var in Javascripts to show the working of html without doing it in a live server
+it still works if we remove the var part in js file and opened it in a live server

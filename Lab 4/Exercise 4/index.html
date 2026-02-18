@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Weather Dashboard</h1>
+    </header>
+    <main class="main">
+      <section class="controls" aria-label="City search">
+        <label for="cityInput" class="label">City</label>
+        <div class="input-row">
+          <input
+            id="cityInput"
+            type="text"
+            class="input"
+            placeholder="Enter city name">
+          <button id="searchBtn" class="btn">Search</button>
+        </div>
+        <p id="inputError" class="message message-error" aria-live="polite"></p>
+      </section>
+      <section class="dashboard" aria-label="Weather information">
+        <div id="tempDiv" class="card"></div>
+        <div id="humidityDiv" class="card"></div>
+        <div id="conditionDiv" class="card"></div>
+      </section>
+      <p id="statusRegion" class="sr-status" aria-live="polite"></p>
+    </main>
+    <div class="overlay">
+      <div class="spinner"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+
