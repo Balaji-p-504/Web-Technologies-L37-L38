@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Username Availability Checker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Registration</h1>
+  </header>
+  <main class="main">
+    <section class="panel" aria-label="Registration form">
+      <form id="registrationForm" novalidate>
+        <div class="field">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            autocomplete="username"
+            aria-required="true"
+            aria-describedby="usernameHelp usernameFeedback"
+            aria-invalid="false">
+          <p id="usernameHelp" class="help-text">
+            Choose a unique username. It is case-insensitive.
+          </p>
+          <p
+            id="usernameFeedback"
+            class="feedback"
+            role="status"
+            aria-live="polite">
+          </p>
+        </div>
+        <div class="actions">
+          <button
+            id="submitButton"
+            type="submit"
+            disabled
+            aria-disabled="true">
+            Create account
+          </button>
+          <p
+            id="formStatus"
+            class="form-status"
+            aria-live="polite">
+          </p>
+        </div>
+      </form>
+    </section>
+    <div
+      id="liveRegion"
+      class="sr-only"
+      aria-live="polite">
+      Form status updates
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
+
