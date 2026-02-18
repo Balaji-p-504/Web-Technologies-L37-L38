@@ -1,0 +1,20 @@
+[
+  { "name": "Wireless Mouse", "price": 19.99, "category": "Electronics" },
+  { "name": "Mechanical Keyboard", "price": 59.95, "category": "Electronics" },
+  { "name": "USB-C Charger", "price": 24.5, "category": "Electronics" },
+  { "name": "Noise Cancelling Headphones", "price": 129.0, "category": "Electronics" },
+  { "name": "Smartphone Stand", "price": 9.99, "category": "Electronics" },
+
+  { "name": "Intro to JavaScript", "price": 29.99, "category": "Books" },
+  { "name": "CSS Design Patterns", "price": 34.0, "category": "Books" },
+  { "name": "HTML5 Handbook", "price": 22.5, "category": "Books" },
+  { "name": "UX Fundamentals", "price": 27.75, "category": "Books" },
+  { "name": "Responsive Web Design", "price": 31.25, "category": "Books" },
+
+  { "name": "Classic White T-Shirt", "price": 12.0, "category": "Clothing" },
+  { "name": "Blue Denim Jeans", "price": 45.5, "category": "Clothing" },
+  { "name": "Running Sneakers", "price": 68.99, "category": "Clothing" },
+  { "name": "Lightweight Hoodie", "price": 39.0, "category": "Clothing" },
+  { "name": "Baseball Cap", "price": 15.25, "category": "Clothing" }
+]
+
