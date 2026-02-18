@@ -1,0 +1,6 @@
+[
+  { "id": "S001", "name": "Alice Johnson", "department": "CSE", "marks": 88 },
+  { "id": "S002", "name": "Bob Smith", "department": "ECE", "marks": 75 },
+  { "id": "S003", "name": "Charlie Lee", "department": "MECH", "marks": 92 }
+]
+

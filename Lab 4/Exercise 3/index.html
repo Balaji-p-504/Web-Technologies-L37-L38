@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Student Management</h1>
+  </header>
+  <main class="main">
+    <section class="panel" aria-label="Student form and table">
+      <form id="form" class="form" novalidate>
+        <div class="grid">
+          <div class="field">
+            <label for="studentId">Student ID</label>
+            <input id="studentId" name="studentId" type="text" required>
+          </div>
+          <div class="field">
+            <label for="studentName">Name</label>
+            <input id="studentName" name="studentName" type="text" required>
+          </div>
+          <div class="field">
+            <label for="studentDept">Department</label>
+            <input id="studentDept" name="studentDept" type="text" required>
+          </div>
+          <div class="field">
+            <label for="studentMarks">Marks</label>
+            <input id="studentMarks" name="studentMarks" type="number" min="0" max="100" required>
+          </div>
+        </div>
+        <div class="actions">
+          <button type="submit" id="submitButton" class="btn">Save</button>
+          <button type="button" id="resetButton" class="btn btn-secondary">Clear</button>
+          <p id="status" class="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <table class="table" aria-label="Student list">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Department</th>
+            <th scope="col">Marks</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
+
