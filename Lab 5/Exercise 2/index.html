@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Book Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1>Library Book Tracker</h1>
+    </header>
+    <main class="main">
+      <section class="panel" aria-label="Book form">
+        <form id="bookForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="bookIdInput">Book ID</label>
+              <input id="bookIdInput" name="bookId" type="number" min="1" step="1" aria-describedby="bookIdError">
+              <div id="bookIdError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="titleInput">Title</label>
+              <input id="titleInput" name="title" type="text" aria-describedby="titleError">
+              <div id="titleError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="authorInput">Author</label>
+              <input id="authorInput" name="author" type="text" aria-describedby="authorError">
+              <div id="authorError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="availabilitySelect">Availability</label>
+              <select id="availabilitySelect" name="availability" aria-describedby="availabilityError">
+                <option value="">Select...</option>
+                <option value="true">Available</option>
+                <option value="false">Unavailable</option>
+              </select>
+              <div id="availabilityError" class="field-error"></div>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" id="btnSave" class="btn">Save</button>
+            <button type="button" id="btnReset" class="btn btn-secondary">Reset</button>
+            <p id="statusText" class="status-text" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+      <section class="panel" aria-label="Book table">
+        <div class="table-wrapper">
+          <table id="bookTable" aria-label="Books">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort="id">
+                    Book ID
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort="title">
+                    Title
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort="author">
+                    Author
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">
+                  <button type="button" class="sort-button" data-sort="availability">
+                    Availability
+                    <span class="sort-indicator" aria-hidden="true"></span>
+                  </button>
+                </th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookTableBody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <div id="toastSuccess" class="toast toast-success" role="status" aria-live="polite">
+        <span id="toastSuccessText">Operation completed successfully</span>
+      </div>
+      <div id="toastError" class="toast toast-error" role="alert" aria-live="polite">
+        <span id="toastErrorText"></span>
+        <button type="button" id="toastErrorClose" aria-label="Close error message">×</button>
+      </div>
+      <div id="overlay" class="overlay" aria-hidden="true">
+        <span>Loading...</span>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+

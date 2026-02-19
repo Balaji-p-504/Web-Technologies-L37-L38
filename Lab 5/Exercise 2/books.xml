@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <book id="1">
+    <title>Generic Book One</title>
+    <author>Author A</author>
+    <availability>true</availability>
+  </book>
+  <book id="2">
+    <title>Generic Book Two</title>
+    <author>Author B</author>
+    <availability>false</availability>
+  </book>
+  <book id="3">
+    <title>Generic Book Three</title>
+    <author>Author C</author>
+    <availability>true</availability>
+  </book>
+  <book id="4">
+    <title>Generic Book Four</title>
+    <author>Author D</author>
+    <availability>false</availability>
+  </book>
+  <book id="5">
+    <title>Generic Book Five</title>
+    <author>Author E</author>
+    <availability>true</availability>
+  </book>
+</library>
+
