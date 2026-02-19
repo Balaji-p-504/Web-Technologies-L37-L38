@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Inventory System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1>Product Inventory System</h1>
+    </header>
+    <main class="main">
+      <section class="panel" aria-label="Add product">
+        <form id="productForm" novalidate>
+          <div class="form-grid form-grid-products">
+            <div class="field">
+              <label for="productNameInput">Name</label>
+              <input id="productNameInput" name="productName" type="text" minlength="3" maxlength="50"
+                     aria-describedby="productNameError" autocomplete="off">
+              <div id="productNameError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="categorySelect">Category</label>
+              <select id="categorySelect" name="category" aria-describedby="categoryError">
+                <option value="">Select category...</option>
+              </select>
+              <div id="categoryError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="priceInput">Price</label>
+              <input id="priceInput" name="price" type="number" min="0.01" step="0.01"
+                     aria-describedby="priceError" autocomplete="off">
+              <div id="priceError" class="field-error"></div>
+            </div>
+            <div class="field">
+              <label for="stockInput">Stock quantity</label>
+              <input id="stockInput" name="stock" type="number" min="0" step="1"
+                     aria-describedby="stockError" autocomplete="off">
+              <div id="stockError" class="field-error"></div>
+            </div>
+          </div>
+          <div class="actions actions-form">
+            <button type="submit" id="btnAddProduct" class="btn">Add product</button>
+            <button type="button" id="btnResetForm" class="btn btn-secondary">Reset</button>
+            <p id="statusText" class="status-text" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-label="Inventory controls and table">
+        <div class="controls">
+          <div class="control-group">
+            <label for="searchInput">Search</label>
+            <input id="searchInput" type="search" placeholder="Search by name or ID" autocomplete="off">
+          </div>
+          <div class="control-group">
+            <label for="filterCategorySelect">Filter by category</label>
+            <select id="filterCategorySelect">
+              <option value="all">All categories</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <span class="control-label">Columns</span>
+            <div class="column-toggles" role="group" aria-label="Toggle column visibility">
+              <label><input type="checkbox" data-column="id" checked> ID</label>
+              <label><input type="checkbox" data-column="name" checked> Name</label>
+              <label><input type="checkbox" data-column="category" checked> Category</label>
+              <label><input type="checkbox" data-column="price" checked> Price</label>
+              <label><input type="checkbox" data-column="stock" checked> Stock</label>
+            </div>
+          </div>
+          <div class="control-group control-group-right">
+            <p id="searchCount" class="search-count" aria-live="polite">0 products</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="inventoryTable" aria-label="Products">
+            <thead>
+              <tr>
+                <th scope="col" data-column="id" data-sort-key="id" tabindex="0">ID</th>
+                <th scope="col" data-column="name" data-sort-key="name" tabindex="0">Name</th>
+                <th scope="col" data-column="category" data-sort-key="category" tabindex="0">Category</th>
+                <th scope="col" data-column="price" data-sort-key="price" tabindex="0">Price</th>
+                <th scope="col" data-column="stock" data-sort-key="stock" tabindex="0">Stock</th>
+                <th scope="col" data-column="actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination" aria-label="Inventory pagination">
+          <button type="button" id="btnPrevPage" class="btn btn-small" disabled>Previous</button>
+          <span id="pageInfo" class="page-info">Page 1 of 1</span>
+          <button type="button" id="btnNextPage" class="btn btn-small" disabled>Next</button>
+        </div>
+
+        <div id="undoContainer" class="undo-container" aria-live="polite">
+          <span id="undoMessage"></span>
+          <button type="button" id="btnUndoDelete" class="btn btn-small btn-secondary">Undo</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Inventory value summary">
+        <div class="value-summary-header">
+          <h2>Inventory value</h2>
+          <div class="value-actions">
+            <button type="button" id="btnExportJson" class="btn btn-small">Export JSON</button>
+            <button type="button" id="btnExportCsv" class="btn btn-small">Export CSV</button>
+            <button type="button" id="btnExportValueCsv" class="btn btn-small">Export value CSV</button>
+            <button type="button" id="btnPrint" class="btn btn-small btn-secondary">Print view</button>
+          </div>
+        </div>
+        <p id="totalValueText" class="total-value" aria-live="polite">Total value: –</p>
+        <div class="value-breakdown-wrapper">
+          <table aria-label="Inventory value by category" class="value-table">
+            <thead>
+              <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Value</th>
+              </tr>
+            </thead>
+            <tbody id="valueBreakdownBody">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Audit trail and keyboard shortcuts">
+        <div class="audit-layout">
+          <div class="audit-section">
+            <h2>Audit trail</h2>
+            <p class="small-text">Recent edits to price or stock are listed here.</p>
+            <ul id="auditList" class="audit-list" aria-live="polite">
+            </ul>
+          </div>
+          <div class="shortcuts-section">
+            <h2>Keyboard shortcuts</h2>
+            <ul class="shortcut-list">
+              <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> – Focus add product form</li>
+              <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> – Focus search</li>
+              <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> – Export inventory JSON</li>
+              <li><kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> – Print inventory</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="API and data documentation">
+        <h2>API and data documentation</h2>
+        <h3>Product data structure</h3>
+        <ul class="doc-list">
+          <li><strong>id</strong> (string): Unique alphanumeric product identifier, generated automatically.</li>
+          <li><strong>name</strong> (string): Product name, 3–50 characters.</li>
+          <li><strong>category</strong> (string): One of the predefined categories in the category selector.</li>
+          <li><strong>price</strong> (number): Decimal value &gt; 0, up to 2 decimal places.</li>
+          <li><strong>stock</strong> (number): Integer, non‑negative.</li>
+        </ul>
+        <h3>Operations</h3>
+        <ul class="doc-list">
+          <li><strong>Load inventory</strong>: Data is loaded asynchronously from <code>inventory.json</code> with up to 3 retries. On success, data is cached in memory and backed up to <code>localStorage</code>. On failure, an empty inventory is used.</li>
+          <li><strong>Create product</strong>: Submitting the form validates inputs, checks for duplicate names within the same category, generates a unique ID, adds the product to the in‑memory cache, updates <code>localStorage</code>, refreshes the table, and recalculates inventory values.</li>
+          <li><strong>Edit product</strong>: Clicking “Edit” enables inline editing of price and stock. Saving validates the new values, records an audit trail entry, updates the cache and <code>localStorage</code>, refreshes the table, and recalculates inventory values.</li>
+          <li><strong>Delete product</strong>: Clicking “Delete” asks for confirmation, removes the product from the cache and <code>localStorage</code>, updates the table and inventory values, and exposes an undo action for the most recent deletion.</li>
+          <li><strong>Search and filter</strong>: Search input and category filter dynamically update the displayed rows, preserving active filters during add, edit, delete, and undo operations.</li>
+          <li><strong>Export</strong>: Export buttons generate JSON or CSV files for the current inventory, and a CSV summary of inventory value by category.</li>
+        </ul>
+      </section>
+
+      <div id="toastSuccess" class="toast toast-success" role="status" aria-live="polite">
+        <span id="toastSuccessText">Operation completed successfully</span>
+      </div>
+      <div id="toastError" class="toast toast-error" role="alert" aria-live="polite">
+        <span id="toastErrorText"></span>
+        <button type="button" id="toastErrorClose" aria-label="Close error message">×</button>
+      </div>
+      <div id="overlay" class="overlay" aria-hidden="true">
+        <span>Loading inventory...</span>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "P1001",
+    "name": "Wireless Mouse",
+    "category": "Electronics",
+    "price": 799.0,
+    "stock": 25
+  },
+  {
+    "id": "P1002",
+    "name": "Mechanical Keyboard",
+    "category": "Electronics",
+    "price": 2499.5,
+    "stock": 12
+  },
+  {
+    "id": "P2001",
+    "name": "Cotton T‑Shirt",
+    "category": "Clothing",
+    "price": 499.0,
+    "stock": 40
+  },
+  {
+    "id": "P2002",
+    "name": "Denim Jeans",
+    "category": "Clothing",
+    "price": 1399.99,
+    "stock": 8
+  },
+  {
+    "id": "P3001",
+    "name": "Brown Bread",
+    "category": "Groceries",
+    "price": 45.0,
+    "stock": 15
+  },
+  {
+    "id": "P3002",
+    "name": "Olive Oil 1L",
+    "category": "Groceries",
+    "price": 699.75,
+    "stock": 6
+  },
+  {
+    "id": "P4001",
+    "name": "Data Structures Book",
+    "category": "Books",
+    "price": 899.5,
+    "stock": 18
+  },
+  {
+    "id": "P4002",
+    "name": "Web Technologies Guide",
+    "category": "Books",
+    "price": 749.0,
+    "stock": 5
+  },
+  {
+    "id": "P5001",
+    "name": "LED Desk Lamp",
+    "category": "Home",
+    "price": 1199.0,
+    "stock": 9
+  },
+  {
+    "id": "P5002",
+    "name": "Stainless Steel Bottle",
+    "category": "Home",
+    "price": 349.99,
+    "stock": 0
+  }
+]
+
