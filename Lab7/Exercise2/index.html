@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Book Finder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Online Book Finder</h1>
+        
+        <div class="controls-card">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search by book title..." oninput="searchBooks()">
+            </div>
+            
+            <div class="filter-sort-row">
+                <div class="control-group">
+                    <label>Category:</label>
+                    <select id="category-filter" onchange="filterByCategory()">
+                        <option value="">All Categories</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Database">Database</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Software Engineering">Software Engineering</option>
+                        <option value="Web Development">Web Development</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label>Sort By:</label>
+                    <select id="sort-filter" onchange="sortBooks()">
+                        <option value="">Default</option>
+                        <option value="price">Price (Low to High)</option>
+                        <option value="rating">Rating (High to Low)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <button id="top-rated-btn" onclick="getTopRated()">Top Rated (4.0+)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="books-section">
+            <h2 id="results-title">All Books</h2>
+            <div id="books-list" class="books-list">
+                <!-- Books will be loaded here -->
+            </div>
+            
+            <div class="pagination">
+                <button id="load-more-btn" onclick="loadMore()">Load More</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

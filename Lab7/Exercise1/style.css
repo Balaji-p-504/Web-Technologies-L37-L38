@@ -1,0 +1,168 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 40px;
+}
+
+.form-card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+}
+
+.form-card h2 {
+    margin-bottom: 20px;
+    color: #5f6368;
+    font-size: 1.2rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus {
+    border-color: #1a73e8;
+}
+
+textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#save-btn {
+    background-color: #1a73e8;
+    color: white;
+}
+
+#save-btn:hover {
+    background-color: #1557b0;
+}
+
+#cancel-btn {
+    background-color: #f1f3f4;
+    color: #3c4043;
+}
+
+#cancel-btn:hover {
+    background-color: #e8eaed;
+}
+
+.notes-section h2 {
+    margin-bottom: 20px;
+    color: #5f6368;
+}
+
+.notes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.note-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-top: 4px solid #1a73e8;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-card h3 {
+    color: #202124;
+    margin-bottom: 8px;
+}
+
+.note-card .subject {
+    font-size: 0.9rem;
+    color: #1a73e8;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.note-card p {
+    font-size: 0.95rem;
+    color: #5f6368;
+    flex-grow: 1;
+    margin-bottom: 15px;
+}
+
+.note-card .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #9aa0a6;
+    border-top: 1px solid #f1f3f4;
+    padding-top: 15px;
+}
+
+.note-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn {
+    color: #1a73e8;
+    background: none;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+.delete-btn {
+    color: #d93025;
+    background: none;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+    background-color: #f8f9fa;
+}
